@@ -17,6 +17,7 @@ public class FixMessageParser {
 
     public FixMessageParser() {
         int numberOfProcessors = Runtime.getRuntime().availableProcessors();
+        //System.out.println("numberOfProcessors = " + numberOfProcessors);
         this.executorService = Executors.newFixedThreadPool(numberOfProcessors);
     }
 
