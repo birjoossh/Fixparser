@@ -1,7 +1,3 @@
-90% of storage used … If you run out, you can't create, edit, and upload files. Get 100 GB of storage for HK$15.00 HK$0
-for 1 month.
-Abc.txt
-
 # FixParser Library
 
 ## Project Overview
