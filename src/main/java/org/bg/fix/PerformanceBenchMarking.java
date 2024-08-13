@@ -24,7 +24,8 @@ public class PerformanceBenchMarking {
 
             String fixMessageString = "8=FIX.4.2\u00019=142\u000135=D\u000111=123\u0001109=ultrarichclient\u000176=jp\u00011=clientacc\u0001"
                     + "78=2\u000179=acc1\u000180=100\u000179=acc2\u000180=200\u000155=appl\u000154=1\u000138=300\u0001"
-                    + "44=1.67\u000140=1\u000110=21\u0001";;
+                    + "44=1.67\u000140=1\u000110=21\u0001";
+            ;
 
             if (benchmarkParsingInSequence) {
                 System.out.println("Benchmarking with multi-threading :");

@@ -94,8 +94,4 @@ public class NewOrder extends FixMessage {
             return allocAccount == null && allocShares == null;
         }
     }
-
 }
-
-
-
