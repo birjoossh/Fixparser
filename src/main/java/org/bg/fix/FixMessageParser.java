@@ -5,6 +5,7 @@ import org.bg.fix.models.NewOrder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -23,22 +24,23 @@ public class FixMessageParser {
 
     public static FixMessage parseFixMessage(byte[] fixMessageStringArray, Boolean validateMessage) throws Exception {
         String fixMessageString = new String(fixMessageStringArray);
+        StringTokenizer tokenizer = new StringTokenizer(fixMessageString, String.valueOf(SOH));
+
         String[] keyValuePairs = fixMessageString.split(String.valueOf(SOH));
 
         List<FixMessage.Field> fields = new ArrayList<>();
 
         FixMessage.Header header = new FixMessage.Header();
         int trailer = -1;
-        int bodyStart = -1;
-        int bodyEnd = -1;
-        for (int i = 0; i < keyValuePairs.length; i++) {
-            String[] parts = keyValuePairs[i].split("=", 2);
+
+        while (tokenizer.hasMoreTokens()) {
+            String keyValuePair = tokenizer.nextToken();
+            String[] parts = keyValuePair.split("=", 2);
             if (parts.length != 2) {
-                throw new RuntimeException("Invalid FIX field: " + keyValuePairs[i]);
+                throw new RuntimeException("Invalid FIX field: " + keyValuePair);
             }
             int tag = Integer.parseInt(parts[0]);
             String value = parts[1];
-            fields.add(new FixMessage.Field(tag, value));
 
             switch (tag) {
                 case 8 -> header.setProtocol(value);
@@ -46,21 +48,20 @@ public class FixMessageParser {
                 case 35 -> header.setMsgType(value);
                 case 10 -> {
                     trailer = Integer.parseInt(value);
-                    if (validateMessage) FixMessage.validateCheckSum(fixMessageString, trailer);
-                    bodyEnd = i;
                 }
-                default -> bodyStart = bodyStart == -1 ? i : bodyStart; //initialize bodyStart if not already set
+                default -> fields.add(new FixMessage.Field(tag, value));
             }
         }
+        if (validateMessage) FixMessage.validateCheckSum(fixMessageString, trailer);
         if (validateMessage) header.validate();
-        return parseBody(header, trailer, fields, bodyStart, bodyEnd);
+        return parseBody(header, trailer, fields);
     }
 
-    public static FixMessage parseBody(FixMessage.Header header, int trailer, List<FixMessage.Field> fields, int bodyStart, int bodyEnd) throws Exception {
+    public static FixMessage parseBody(FixMessage.Header header, int trailer, List<FixMessage.Field> fields) throws Exception {
         FixMessage fixMessage;
         if ("D".equals(header.getMsgType())) {
             fixMessage = new NewOrder();
-            fixMessage.setData(fields, bodyStart, bodyEnd);
+            fixMessage.setData(fields);
         } else {
             throw new RuntimeException("Unsupported fix message type: " + header.getMsgType());
         }

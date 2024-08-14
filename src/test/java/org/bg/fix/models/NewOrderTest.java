@@ -19,7 +19,7 @@ public class NewOrderTest {
                 new FixMessage.Field(38, "300"), new FixMessage.Field(44, "1.67"),
                 new FixMessage.Field(40, "1"));
 
-        newOrder.setData(fields, 0, fields.size());
+        newOrder.setData(fields);//, 0, fields.size());
 
         Assertions.assertEquals("123", newOrder.getClOrdID());
         Assertions.assertEquals("client1", newOrder.getClientID());
@@ -49,7 +49,7 @@ public class NewOrderTest {
                 new FixMessage.Field(55, "APPL"), new FixMessage.Field(54, "1"),
                 new FixMessage.Field(38, "300"), new FixMessage.Field(44, "1.67"),
                 new FixMessage.Field(40, "1"));
-        Assertions.assertThrows(RuntimeException.class, () -> newOrder.setData(fields, 0, fields.size()));
+        Assertions.assertThrows(RuntimeException.class, () -> newOrder.setData(fields));//, 0, fields.size()));
     }
 
     @Test
@@ -64,7 +64,7 @@ public class NewOrderTest {
                 new FixMessage.Field(38, "300"), new FixMessage.Field(44, "1.67"),
                 new FixMessage.Field(40, "1"));
 
-        Assertions.assertThrows(RuntimeException.class, () -> newOrder.setData(fields, 0, fields.size()));
+        Assertions.assertThrows(RuntimeException.class, () -> newOrder.setData(fields));//, 0, fields.size()));
     }
 
     @Test
@@ -79,6 +79,6 @@ public class NewOrderTest {
                 new FixMessage.Field(38, "300"), new FixMessage.Field(44, "1.67"),
                 new FixMessage.Field(40, "1"));
 
-        Assertions.assertThrows(Exception.class, () -> newOrder.setData(fields, 0, fields.size()));
+        Assertions.assertThrows(Exception.class, () -> newOrder.setData(fields));//, 0, fields.size()));
     }
 }

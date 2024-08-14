@@ -27,9 +27,8 @@ public class NewOrder extends FixMessage {
     private String orderType; //tag 40
 
     @Override
-    public void setData(List<FixMessage.Field> fields, int bodyStart, int bodyEnd) throws Exception {
-        for (int i = bodyStart; i < bodyEnd; i++) {
-            Field field = fields.get(i);
+    public void setData(List<FixMessage.Field> fields) throws Exception {
+        for (Field field : fields) {
             int tag = field.getTag();
             switch (tag) {
                 case 11 -> this.clOrdID = field.getValue();

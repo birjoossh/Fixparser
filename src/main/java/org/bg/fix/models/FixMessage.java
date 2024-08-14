@@ -34,7 +34,7 @@ public abstract class FixMessage {
         return checksum % 256;
     }
 
-    public abstract void setData(List<FixMessage.Field> fields, int bodyStart, int bodyEnd) throws
+    public abstract void setData(List<FixMessage.Field> fields) throws
             Exception;
 
     @AllArgsConstructor
