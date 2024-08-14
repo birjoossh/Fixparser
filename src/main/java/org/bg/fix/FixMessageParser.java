@@ -12,6 +12,11 @@ import java.util.concurrent.Executors;
 
 import static org.bg.fix.models.Constants.SOH;
 
+/*
+  This is a generic fix parser class that exposes sync and async api for fix msg parsing.
+  It parses the tag-value and compose header/trailer. It further calls the object specific parser to parse corresponding msg body and compose a
+  domain object eg. NewOrder
+ */
 public class FixMessageParser {
 
     private final ExecutorService executorService;

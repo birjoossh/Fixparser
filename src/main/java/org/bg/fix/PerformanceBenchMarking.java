@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+/*
+This is a performance benchmarking class that calls teh sync and async api with exponentially increasing load and measure the total and avg elapsed time
+ */
 public class PerformanceBenchMarking {
     public static void main(String[] args) throws Exception {
         if (args.length < 3) {

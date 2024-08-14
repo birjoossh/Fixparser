@@ -6,6 +6,10 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+   This is a domain model to hold NewOrder data. It extends FixMessage and overrides parseBody() method provide domain specific way to parse the fix msg.
+   This patter can be extend to other domain model aswell.
+ */
 //<href url="https://www.onixs.biz/fix-dictionary/4.2/msgType_D_68.html">Fix New Order Dictionary</href>
 @AllArgsConstructor
 @NoArgsConstructor
